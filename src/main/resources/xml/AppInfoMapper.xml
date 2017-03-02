@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.finger.appinfo.dao.AppInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.finger.appinfo.pojo.AppInfo" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="app_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="os_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="config" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="versions" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="app_path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="qrcode_path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="app_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, app_name, os_name, config, versions, app_path, qrcode_path, app_time
+  </sql>
+
+  <select id="queryAppInfoListWithoutCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    SELECT
+    *
+    FROM app_info
+    GROUP BY id
+    ORDER BY id DESC LIMIT #{startNo}, #{pageSize}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from app_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.finger.appinfo.pojo.AppInfo" >
+    insert into app_info (id, app_name, os_name, 
+      config, versions, app_path, 
+      qrcode_path, app_time)
+    values (#{id,jdbcType=BIGINT}, #{appName,jdbcType=VARCHAR}, #{osName,jdbcType=VARCHAR}, 
+      #{config,jdbcType=VARCHAR}, #{versions,jdbcType=VARCHAR}, #{appPath,jdbcType=VARCHAR}, 
+      #{qrcodePath,jdbcType=VARCHAR}, #{appTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.finger.appinfo.pojo.AppInfo" >
+    insert into app_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appName != null" >
+        app_name,
+      </if>
+      <if test="osName != null" >
+        os_name,
+      </if>
+      <if test="config != null" >
+        config,
+      </if>
+      <if test="versions != null" >
+        versions,
+      </if>
+      <if test="appPath != null" >
+        app_path,
+      </if>
+      <if test="qrcodePath != null" >
+        qrcode_path,
+      </if>
+      <if test="appTime != null" >
+        app_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="osName != null" >
+        #{osName,jdbcType=VARCHAR},
+      </if>
+      <if test="config != null" >
+        #{config,jdbcType=VARCHAR},
+      </if>
+      <if test="versions != null" >
+        #{versions,jdbcType=VARCHAR},
+      </if>
+      <if test="appPath != null" >
+        #{appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodePath != null" >
+        #{qrcodePath,jdbcType=VARCHAR},
+      </if>
+      <if test="appTime != null" >
+        #{appTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.finger.appinfo.pojo.AppInfo" >
+    update app_info
+    <set >
+      <if test="appName != null" >
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="osName != null" >
+        os_name = #{osName,jdbcType=VARCHAR},
+      </if>
+      <if test="config != null" >
+        config = #{config,jdbcType=VARCHAR},
+      </if>
+      <if test="versions != null" >
+        versions = #{versions,jdbcType=VARCHAR},
+      </if>
+      <if test="appPath != null" >
+        app_path = #{appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodePath != null" >
+        qrcode_path = #{qrcodePath,jdbcType=VARCHAR},
+      </if>
+      <if test="appTime != null" >
+        app_time = #{appTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.finger.appinfo.pojo.AppInfo" >
+    update app_info
+    set app_name = #{appName,jdbcType=VARCHAR},
+      os_name = #{osName,jdbcType=VARCHAR},
+      config = #{config,jdbcType=VARCHAR},
+      versions = #{versions,jdbcType=VARCHAR},
+      app_path = #{appPath,jdbcType=VARCHAR},
+      qrcode_path = #{qrcodePath,jdbcType=VARCHAR},
+      app_time = #{appTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
